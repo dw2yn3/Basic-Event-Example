@@ -10,6 +10,32 @@ namespace Basic_Event_Example
     {
         static void Main(string[] args)
         {
+            EvtPublisher ep = new EvtPublisher();
+
+            EvtSubscriber es = new EvtSubscriber();
+
+            ep.evt += es.HandleTheEvent;
+
+            ep.CheckBalance(260);
+        }
+    }
+    public class EvtPublisher
+    {
+        public delegate void del(string x);
+
+        public event del evt;
+
+        public void CheckBalance (int x)
+        {
+            if (x > 250)
+                evt("The current balance exceed 250");
+        }
+    }
+    public class EvtSubscriber
+    {
+        public void HandleTheEvent (string a)
+        {
+            Console.WriteLine(a);
         }
     }
 }
